@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
 
-  get 'static_pages/home'
+  get 'users/new'
 
-  get 'static_pages/help'
+  root 'static_pages#home'
+
+  get 'help'    => 'static_pages#help'
+  get 'about'   => 'static_pages#about'
+  get 'signup'  => 'users#new'
 
   resources :microposts
   resources :users
@@ -11,7 +15,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
-  root 'static_pages#home'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
