@@ -11,8 +11,11 @@
     <a href="http://www.railstutorial.org/">Ruby on Rails Tutorial</a>
     sample application.
   </h2>
-
-  <%= link_to "Sign up now!", 'signup', class: "btn btn-lg btn-primary" %>
+  <% if logged_in? %>
+      Well come to Ruby And Rails Application
+  <% else %>
+      <%= link_to "Sign up now!", 'signup', class: "btn btn-lg btn-primary" %>
+  <% end %>
 </div>
 
 
