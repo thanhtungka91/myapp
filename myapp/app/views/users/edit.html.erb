@@ -1,6 +1,15 @@
-<h1>Editing User</h1>
-noi chung la cac ngon ngu co ban la cung onazi ca thoi
-<%= render 'form' %>
+<% provide(:title, "Edit user") %>
+<h1>Update your profile</h1>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+
+    <div class="gravatar_edit">
+      <%= gravatar_for @user %>
+      <a href="http://gravatar.com/emails" target="_blank">change</a>
+    </div>
+
+    <%= render 'form'%>
+
+  </div>
+</div>

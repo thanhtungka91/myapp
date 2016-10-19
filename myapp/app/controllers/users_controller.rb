@@ -12,6 +12,11 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+  # tuc la mac dinh la no se co roi
+  # neu ma khong vut vao day thi no van chay duoc la sao nhi?
   def create
     @user = User.new(user_params)
     if @user.save
@@ -24,6 +29,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+      puts "update sucessfull"
+    else
+      render 'edit'
+  end
   private
   def user_params
     return params.require(:user).permit(:name, :email, :password, :password_confirmation)
