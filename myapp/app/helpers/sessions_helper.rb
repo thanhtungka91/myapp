@@ -23,6 +23,10 @@ module SessionsHelper
   def logged_in?
     !current_user.nil?
   end
+  # check current user is correct or not -> apply when you edit user
+  def current_user?(user)
+    user == current_user
+  end
 
   def log_out
     # same class thi cu goi thoi -> forget function phai truyen nguoi vao -> do la nguoi hien tai

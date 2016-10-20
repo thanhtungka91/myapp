@@ -51,10 +51,7 @@ class UsersController < ApplicationController
 
   def logged_in_user
     # if is not logged -> nguoc lai voi if
-    puts("almost the same-> learn and learn -> only way for be better",logged_in?)
-    if logged_in?
-      puts("ok")
-    else
+    unless logged_in?
       flash[:danger] = "Please log in."
       redirect_to login_url
     end
@@ -63,7 +60,7 @@ class UsersController < ApplicationController
   def correct_user
   #   minh phai get id ra va so sanh neu it is NOT same id -> not
     @user = User.find(params[:id])
-    unless @user == current_user
+    unless current_user?(@user)
       redirect_to root_url
     end
   end
