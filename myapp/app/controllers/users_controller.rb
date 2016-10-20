@@ -1,4 +1,9 @@
 class UsersController < ApplicationController
+  # this function "edit" and "update" need to check authorization
+  # in here we have to implement logged_in_user
+
+  before_action :logged_in_user, only: [:edit, :update]
+  before_action :correct_user, only: [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -33,11 +38,33 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       puts "update sucessfull"
+      flash[:success] = "Profile updated"
+      redirect_to @user
     else
       render 'edit'
+    end
   end
   private
   def user_params
     return params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def logged_in_user
+    # if is not logged -> nguoc lai voi if
+    puts("almost the same-> learn and learn -> only way for be better",logged_in?)
+    if logged_in?
+      puts("ok")
+    else
+      flash[:danger] = "Please log in."
+      redirect_to login_url
+    end
+  end
+
+  def correct_user
+  #   minh phai get id ra va so sanh neu it is NOT same id -> not
+    @user = User.find(params[:id])
+    unless @user == current_user
+      redirect_to root_url
+    end
   end
 end
