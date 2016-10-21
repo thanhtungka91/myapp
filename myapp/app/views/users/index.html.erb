@@ -12,15 +12,21 @@
   </thead>
 
   <tbody>
+
+  <%= will_paginate %>
+
+  <ul class="users">
     <% @users.each do |user| %>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <li>
+          <%= link_to user.id, user %>
+          <%= gravatar_for user %>
+          <%= link_to user.name, user %>
+        </li>
     <% end %>
+  </ul>
+
+  <%= will_paginate %>
+
   </tbody>
 </table>
 
