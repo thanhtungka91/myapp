@@ -52,6 +52,7 @@ class UsersController < ApplicationController
   def logged_in_user
     # if is not logged -> nguoc lai voi if
     unless logged_in?
+      store_location
       flash[:danger] = "Please log in."
       redirect_to login_url
     end

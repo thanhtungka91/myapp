@@ -51,5 +51,20 @@ module SessionsHelper
     cookies.delete(:user_id)
     cookies.delete(:remember_token)
   end
-
+# problem
+  #if user wants to go to edit but they are not logged-> they will direct login site-> after loggin -> \
+  # as normal-> it only go to the link show -> not edit -->
+  #==> we should save the link save -> after loing -> back the edit page
+  #save the url -> user wants to go
+  def store_location
+    puts('request!!!!!!!!!', request)
+    session[:forwarding_url] = request.original_url if request.get?
+  end
+  # back to forwarding_url
+  # minh van chua hieu default o day dung nhu the nao nua
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding_url] || default)
+    puts('lllllllll',session[:forwarding_url])
+    session.delete(:forwarding_url)
+  end
 end
