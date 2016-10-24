@@ -47,6 +47,8 @@ class UsersController < ApplicationController
     end
   end
   private
+  # i dont know what function of private
+  # user_params -> advoid user can edit on web browser!!!
   def user_params
     return params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
