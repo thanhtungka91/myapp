@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   # this function "edit" and "update" need to check authorization
   # in here we have to implement logged_in_user
 
-  before_action :logged_in_user, only: [:edit, :update]
+  before_action :logged_in_user, only: [:index, :edit, :update]
   before_action :correct_user, only: [:edit, :update]
 
   def show
@@ -10,7 +10,9 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page], :per_page => 5)
+    # other options
+    # @users = User.paginate :page => params[:page], :per_page => 10
   end
 
   def new
@@ -45,6 +47,8 @@ class UsersController < ApplicationController
     end
   end
   private
+  # i dont know what function of private
+  # user_params -> advoid user can edit on web browser!!!
   def user_params
     return params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
