@@ -34,8 +34,10 @@ class User < ActiveRecord::Base
     update_attribute(:remember_digest, User.digest(remember_token))
   end
   # pass rember_token
-  
+
   def authenticated?(attribute, token)
+    # attribute = remember || activation
+    # becuase both are get token -> check the token
     digest = send("#{attribute}_digest")
     return false if digest.nil?
     # return false if remember_digest.nil?
