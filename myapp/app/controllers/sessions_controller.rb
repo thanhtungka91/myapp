@@ -3,10 +3,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    puts('create o day la create session chu khong lien quan gi den user!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    puts('Ham nay thuc ra la mot ham login-> lay param tu form->login->save session')
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
-      # inpuet user infor to session
+      # input user infor to session
       log_in user
       # if the user click to remember_me -> save user else -forget user
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)

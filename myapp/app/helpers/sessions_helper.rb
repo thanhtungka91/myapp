@@ -1,7 +1,7 @@
 # all class for session only
 module SessionsHelper
   def log_in(user)
-    puts 'here is helppppp, what is the isuse? '
+    puts 'Login la save thang id vao trong session-> khong dung y nghia cho lam:D '
     session[:user_id] = user.id
   end
 
@@ -64,7 +64,6 @@ module SessionsHelper
   # minh van chua hieu default o day dung nhu the nao nua
   def redirect_back_or(default)
     redirect_to(session[:forwarding_url] || default)
-    puts('lllllllll',session[:forwarding_url])
     session.delete(:forwarding_url)
   end
 end

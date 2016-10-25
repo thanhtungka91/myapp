@@ -27,9 +27,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      UserMailer.account_activation(@user).deliver_now
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
     else
       render 'new'
 
@@ -50,10 +50,10 @@ class UsersController < ApplicationController
   def destroy
     puts('Did you come here!!!!!!!!!!!!!!!')
     User.find(params[:id]).destroy
-    flash[:success] = "Delete user sucessful"
+    flash[:success] = "Delete user sucessfull"
     redirect_to users_url
   end
-  
+
   private
   # i dont know what function of private
   # user_params -> advoid user can edit on web browser!!!
