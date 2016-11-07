@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
-  #remember token -> here is function
-  attr_accessor :remember_token
+  #day la tao them 2 bien-> cai se dung sau nay!!!
+  attr_accessor :remember_token, :activation_token
 
-  before_save { self.email = email.downcase }
+  before_save :downcase_email
+  before_create :create_activation_digest
   has_many :microposts
   validates :name, presence: true
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -27,16 +28,35 @@ class User < ActiveRecord::Base
   # co ban la hieu -> truyen vao thang remeber token -> save vao thang remember digest
   def remember
     self.remember_token = User.new_token
+    # digest remember_token which is created from base64 library
+    # -> update vao cai thang remember_digest!!!
+    # noi chung la cu phai tu tu moi hieu het duoc !!!
     update_attribute(:remember_digest, User.digest(remember_token))
   end
   # pass rember_token
-  def authenticated?(remember_token)
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+
+  def authenticated?(attribute, token)
+    # attribute = remember || activation
+    # becuase both are get token -> check the token
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+    # return false if remember_digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
   end
 
   def forget
     update_attribute(:remember_digest, nil)
   end
+
+  private
+    def downcase_email
+      self.email = email.downcase
+    end
+    # create activation token
+
+    def create_activation_digest
+      self.activation_token = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end
 
 end

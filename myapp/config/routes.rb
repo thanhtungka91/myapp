@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   get 'about'   => 'static_pages#about'
   get 'signup'  => 'users#new'
   get 'login'  => 'sessions#new'
+  # thuong thi login-> nam trong user-> o day no lai nam trong thang session
+  # vay login-> lay params-> check authen-> save session do lai thoi
+  # sau khi login-> check current id-> before action -> check other next function
   post 'login'  => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
 
@@ -26,6 +29,7 @@ Rails.application.routes.draw do
   resources :users
   resources :sessions
   resources :resumes
+  resources :account_activations, only: [:edit]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

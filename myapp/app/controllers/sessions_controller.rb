@@ -3,15 +3,19 @@ class SessionsController < ApplicationController
   end
 
   def create
-    puts('create o day la create session chu khong lien quan gi den user!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    puts('Ham nay thuc ra la mot ham login-> lay param tu form->login->save session')
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
-      # inpuet user infor to session
-      log_in user
-      # if the user click to remember_me -> save user else -forget user
-      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      # check if in session has a fowarding_url ->directo link else -> defaul user
-      redirect_back_or user
+      if user.activated?
+        log_in user
+        params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+        redirect_back_or user
+      else
+        message  = "Account not activated. "
+        message += "Check your email for the activation link."
+        flash[:warning] = message
+        redirect_to root_url
+      end
     else
       # Create an error message.
       puts 'hello'
