@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  get 'resumes/index'
+
+  get 'resumes/new'
+
+  get 'resumes/create'
+
+  get 'resumes/destroy'
+
   # get 'sessions/new'
 
   # get 'users/new'
@@ -17,6 +25,7 @@ Rails.application.routes.draw do
   resources :microposts
   resources :users
   resources :sessions
+  resources :resumes
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
